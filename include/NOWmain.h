@@ -5,6 +5,7 @@
 #include "NOWhelper.h"
 #include "NOWSend.h"
 #include "NOWRecv.h"
+#include "SerialCommWrite.h"
 
 namespace Tasks
 {

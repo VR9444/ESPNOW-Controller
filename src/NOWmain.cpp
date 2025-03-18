@@ -7,11 +7,12 @@ QueueHandle_t rxQueue;
 
 void onReceive(const uint8_t *mac_addr, const uint8_t *data, int len)
 {
-    uint8_t buffer[256];
-    memcpy(buffer, data, len);
+    //     // SerialCommWrite::write(data, 250);
+    //     uint8_t buffer[250];
+    //     memcpy(buffer, data, len);
 
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    xQueueSendFromISR(rxQueue, &buffer, &xHigherPriorityTaskWoken);
+    //     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    //     xQueueSendFromISR(rxQueue, &buffer, &xHigherPriorityTaskWoken);
 }
 
 Tasks::NOWMain::NOWMain(SysData::SysData &Data) : nowSend(Data), nowRecv(&rxQueue, Data)
@@ -21,7 +22,7 @@ Tasks::NOWMain::NOWMain(SysData::SysData &Data) : nowSend(Data), nowRecv(&rxQueu
 
 void NOWMain::init()
 {
-    rxQueue = xQueueCreate(10, sizeof(uint8_t[256]));
+    rxQueue = xQueueCreate(20, sizeof(uint8_t[250]));
 
     NOWhelper::printMacAdress();
 

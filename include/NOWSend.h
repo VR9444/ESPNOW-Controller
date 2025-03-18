@@ -12,8 +12,7 @@ namespace Tasks
     {
     public:
         void sendDroneData();
-        // static void sendStartupConfig(SysData::SysData &Data);
-        // static void sendAcknowledgement(const uint8_t *buffer);
+        void sendDroneDataFromSerial(uint8_t *buffer);
         NOWSend(SysData::SysData &Data);
 
     private:

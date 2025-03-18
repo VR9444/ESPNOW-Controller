@@ -6,6 +6,10 @@
 #include "NOWmain.h"
 #include "sysdata.h"
 
+#include <vector>
+
+std::vector<uint8_t> bufferIncomingBytesSerial;
+
 // Create system data object
 SysData::SysData sysData;
 
@@ -17,7 +21,6 @@ Commands::Commands commands(sysData, fsManager);
 
 SerialCommandProcessor serialComandProcessor(commands, fsManager, sysData);
 
-// Task function prototypes
 void taskCore0(void *pvParameters);
 void taskCore1(void *pvParameters);
 
@@ -27,25 +30,22 @@ void setup()
 
     // Create task on Core 0
     xTaskCreatePinnedToCore(
-        taskCore0,   // Task function
-        "TaskCore0", // Task name
-        4096,        // Stack size
-        NULL,        // Parameters
-        1,           // Priority
-        NULL,        // Task handle
-        0            // Core 0
-    );
+        taskCore0,
+        "TaskCore0",
+        4096,
+        NULL,
+        1,
+        NULL,
+        0);
 
-    // Create task on Core 1
     xTaskCreatePinnedToCore(
-        taskCore1,   // Task function
-        "TaskCore1", // Task name
-        4096,        // Stack size
-        NULL,        // Parameters
-        1,           // Priority
-        NULL,        // Task handle
-        1            // Core 1
-    );
+        taskCore1,
+        "TaskCore1",
+        4096,
+        NULL,
+        1,
+        NULL,
+        1);
 
     fsManager.begin(commands);
 }
@@ -57,13 +57,17 @@ void loop()
 void taskCore0(void *pvParameters)
 {
 
-    while (1)
+    for (;;)
     {
-        serialComandProcessor.processCommands();
+        serialComandProcessor.processIncomingBytes(bufferIncomingBytesSerial);
+
+        serialComandProcessor.processBuffer(bufferIncomingBytesSerial);
+
         if (sysData.CommandsCalibration.calibrationDone == 1)
         {
             commands.readSticks();
         }
+
         vTaskDelay(pdMS_TO_TICKS(20));
     }
 }

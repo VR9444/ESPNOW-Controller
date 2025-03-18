@@ -19,8 +19,11 @@
 #define NUM_CALIBRATION_SAMPLES_CENTER 500
 #define READ_INTERVAL 50
 
-#define WIFI_SSID "area51-iot"
-#define WIFI_PASSWORD "krizevciiot"
+#define START_BYTE 0xAA
+#define END_BYTE 0xFE
+
 const uint8_t RECEIVER_MAC[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+#define BUZZER_PIN 26
 
 #endif

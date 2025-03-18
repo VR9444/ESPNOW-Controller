@@ -7,6 +7,8 @@
 #include "NOWSend.h"
 #include "sendlist.h"
 
+#include "SerialCommWrite.h"
+
 namespace Tasks
 {
     class NOWRecv
@@ -15,10 +17,6 @@ namespace Tasks
         SysData::SysData &sysData;
         QueueHandle_t *rxQueue;
         void *memoryLocations[100];
-
-        // void handleRecvConfig(const uint8_t *buffer);
-        // void handleRecvStartup(const uint8_t *buffer);
-        // void handleRecvEEPROM(const uint8_t *buffer);
 
     public:
         explicit NOWRecv(QueueHandle_t *queue, SysData::SysData &Data);
